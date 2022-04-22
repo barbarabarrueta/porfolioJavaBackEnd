@@ -1,9 +1,12 @@
 package com.porfolioAngular.porfolio.controller;
 
+import com.porfolioAngular.porfolio.dto.MensajePersona;
 import com.porfolioAngular.porfolio.model.AcercaDe;
 import com.porfolioAngular.porfolio.service.IAcercaDeService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,10 +28,18 @@ public class ControllerAcercaDe {
      
     @PostMapping("/new/acercaDe")
     public void agregarAcercaDe(@RequestBody AcercaDe acer){
-        acercaDeServ.crearAcercaDe(acer);
+        acercaDeServ.agregarAcercaDe(acer);
+    }
+    
+    @GetMapping("/detalleacercade/{id}")
+    public ResponseEntity<AcercaDe> getOnePersona(@PathVariable("id") Long id){
+        if(!acercaDeServ.existAcercaDeById(id))
+            return new ResponseEntity(new MensajePersona("no existe"), HttpStatus.NOT_FOUND);
+        AcercaDe acer = acercaDeServ.getOneAcercaDe(id);
+        return new ResponseEntity(acer, HttpStatus.OK);
     }
 
-    @PutMapping("/editar/acercaDe")
+    @PutMapping("/editar/acercaDe/{id}")
     public void editarAcercaDe(@RequestBody AcercaDe acer){
         acercaDeServ.editarAcercaDe(acer);
     }

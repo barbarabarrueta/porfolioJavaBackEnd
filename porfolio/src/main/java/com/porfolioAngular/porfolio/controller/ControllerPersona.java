@@ -1,9 +1,12 @@
 package com.porfolioAngular.porfolio.controller;
 
+import com.porfolioAngular.porfolio.dto.MensajePersona;
 import com.porfolioAngular.porfolio.model.Persona;
 import com.porfolioAngular.porfolio.service.IPersonaService;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,21 +28,29 @@ public class ControllerPersona {
     
     @PostMapping("/new/persona")
     public void agregarPersona(@RequestBody Persona pers){
-        persoServ.crearPersona(pers);
+        persoServ.agregarPersona(pers);
         // listaPersonas.add(pers);
     }
     
-    @PutMapping("/editar/persona")
-    public void editarEstudio(@RequestBody Persona pers){
+     @GetMapping("/detallepersona/{id}")
+    public ResponseEntity<Persona> getOnePersona(@PathVariable("id") Long id){
+        if(!persoServ.existPersonaById(id))
+            return new ResponseEntity(new MensajePersona("no existe"), HttpStatus.NOT_FOUND);
+        Persona per = persoServ.getOnePersona(id);
+        return new ResponseEntity(per, HttpStatus.OK);
+    }
+    
+    @PutMapping("/editar/persona/{id}")
+    public void editarPersona(@RequestBody Persona pers){
         persoServ.editarPersona(pers);
-         //  listaEstudios.add(est);
+         
     }
     
     @GetMapping("/ver/persona")
     @ResponseBody
     public List<Persona> verPersona(){ 
         return persoServ.verPersona();
-      //   return listaPersonas;
+     
     }
     
     @DeleteMapping ("/deletepersona/{id}")

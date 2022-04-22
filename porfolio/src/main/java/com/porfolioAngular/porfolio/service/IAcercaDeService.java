@@ -7,9 +7,10 @@ import java.util.List;
 public interface IAcercaDeService {
     
     public List<AcercaDe> verAcercaDe();
-    public void crearAcercaDe(AcercaDe acer);
+    public void agregarAcercaDe(AcercaDe acer);
     public void editarAcercaDe(AcercaDe acer); 
     public void borrarAcercaDe(Long id);
-    public AcercaDe buscarAcercaDe(Long id);
+    public AcercaDe getOneAcercaDe (Long id);
+    public boolean existAcercaDeById(Long id);
     
 }

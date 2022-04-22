@@ -5,8 +5,10 @@ import com.porfolioAngular.porfolio.repository.AcercaDeRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class AcercaDeService implements IAcercaDeService{
     
     @Autowired
@@ -19,7 +21,7 @@ public class AcercaDeService implements IAcercaDeService{
     }
 
     @Override
-    public void crearAcercaDe(AcercaDe acer) {
+    public void agregarAcercaDe(AcercaDe acer) {
          acercaDeRepo.save(acer);
     }
 
@@ -34,7 +36,11 @@ public class AcercaDeService implements IAcercaDeService{
     }
 
     @Override
-    public AcercaDe buscarAcercaDe(Long id) {
+    public AcercaDe getOneAcercaDe(Long id) {
         return acercaDeRepo.findById(id).orElse(null);
+    }
+    
+    public boolean existAcercaDeById(Long id){
+        return acercaDeRepo.existsById(id);
     }
 }

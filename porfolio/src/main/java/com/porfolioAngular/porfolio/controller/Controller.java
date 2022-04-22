@@ -3,6 +3,7 @@ package com.porfolioAngular.porfolio.controller;
 
 import com.porfolioAngular.porfolio.dto.MensajeEstudios;
 import com.porfolioAngular.porfolio.model.Estudios;
+import com.porfolioAngular.porfolio.repository.EstudiosRepository;
 import com.porfolioAngular.porfolio.service.EstudiosService;
 import com.porfolioAngular.porfolio.service.IEstudiosService;
 import java.util.ArrayList;
@@ -48,25 +49,15 @@ public class Controller {
         return new ResponseEntity(est, HttpStatus.OK);
     }
     
-       @PutMapping("/editar/estudios/{id}")
-    public ResponseEntity<?> update(@PathVariable("id")Long id, 
-            @RequestBody MensajeEstudios mensajeEstudios){
-        if(!estudiosServ.existEstudioById(id))
-            return new ResponseEntity(new MensajeEstudios("no existe"), HttpStatus.NOT_FOUND);
-        
-        Estudios est = estudiosServ.getOneEstudios(id);
-        id = est.getId();
-        est.setId(est.getId());
-        est.setSchool(est.getSchool());
-        est.setTitle(est.getTitle());
-        est.setStart(est.getStart());
-        est.setEnd(est.getEnd());
-        est.setCareer(est.getCareer());
-        est.setImg(est.getImg());
-        
+
+    
+     @PutMapping("/editar/estudios/{id}")
+    public ResponseEntity<?> editarEstudio(@RequestBody Estudios est){
         estudiosServ.editarEstudio(est);
-        return new ResponseEntity(new MensajeEstudios("producto actualizado"), HttpStatus.OK);
-    }   
+        return new ResponseEntity(new MensajeEstudios("estudio editado con exito"), HttpStatus.OK);
+         //  listaEstudios.add(est);
+    }
+        
     
     @GetMapping("/ver/estudios")
     @ResponseBody
