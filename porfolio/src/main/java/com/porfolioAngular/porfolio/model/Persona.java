@@ -16,14 +16,16 @@ public class Persona {
      private String nombre;
      private String apellido; 
      private String ubicacion;
+     private String img;
      
      public Persona() {
      }
      
-     public Persona(Long id, String nombre, String apellido, String ubicacion){
+     public Persona(Long id, String nombre, String apellido, String ubicacion, String img){
          this.id=id;
          this.nombre=nombre;
          this.apellido=apellido;
          this.ubicacion=ubicacion;
+         this.img=img;
      }
 }
